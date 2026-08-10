@@ -1,5 +1,6 @@
 {
   "name": "react-app-shell",
+  "description": "A starter React app shell built with Vite, React Router, and react-fetch-utils",
   "private": true,
   "version": "0.0.0",
   "type": "module",

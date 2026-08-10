@@ -1,67 +1,78 @@
-# React App Shell
+# React app shell
 
-An opinionated React app framework using Vite, React Router, and `react-fetch-utils`.
+This project is a starter React app shell built with Vite, React Router, and react-fetch-utils. It provides a simple structure for building a frontend app with example routing, API fetching, and runtime configuration.
 
-## Getting Started
+## Get started
 
-```bash
-npm install
-npm run dev
-```
+1. Install dependencies:
 
-## Available Scripts
+   ```bash
+   npm install
+   ```
+
+2. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+## Available scripts
 
 | Script | Description |
-|---|---|
+| --- | --- |
 | `npm run dev` | Start the Vite development server |
-| `npm run build` | Build for production |
+| `npm run build` | Build the app for production |
 | `npm run preview` | Preview the production build locally |
 | `npm run lint` | Run ESLint |
 
-## Project Structure
+## Project structure
 
-```
+```text
 public/
-  runtime-config.js              # Dev runtime config (default)
-  runtime-config.staging.js      # Staging runtime config prototype
-  runtime-config.production.js   # Production runtime config prototype
+  runtime-config.js              # Default development runtime config
+  runtime-config.staging.js      # Example staging runtime config
+  runtime-config.production.js   # Example production runtime config
 src/
-  main.jsx                       # App entry point (BrowserRouter, StrictMode)
+  main.jsx                       # App entry point with BrowserRouter and StrictMode
   App.jsx                        # Route definitions
   api/
-    fetchClient.js               # Configured fetch client (baseUrl, auth token)
+    fetchClient.js               # Configured fetch client with baseUrl and auth token handling
   components/
     Component/
       Component.jsx              # Example component with data fetching
-      getItems.js                # API call for /items
+      getItems.js                # Example API call for /items
       index.js                   # Re-export
   pages/
     Page.jsx                     # Example page
 ```
 
-## Runtime Configuration
+## Runtime configuration
 
-Runtime config is loaded from `public/runtime-config.js` at startup via `window.runConfig`. Swap the file at deploy time for environment-specific values. The config shape is:
+The app loads runtime settings from `public/runtime-config.js` at startup through `window.runConfig`. Replace this file when you deploy to a different environment. The config shape is:
 
 ```js
-window["runConfig"] = {
-    apiUrl: "https://dev.example.com",  // Base URL for the backend API fetch client
-    timeoutMs: 30000,                   // Optional; defaults to 30000
+window.runConfig = {
+  apiUrl: "https://dev.example.com", // Base URL for the backend API fetch client
+  timeoutMs: 30000,                  // Optional; defaults to 30000
 };
 ```
 
-Three environment files are provided out of the box: `runtime-config.js` (dev by default), `runtime-config.staging.js` (example/template for a staging environment), and `runtime-config.production.js` (example/template for production).
+The project includes three example environment files:
 
-## API / Fetch Client
+- `runtime-config.js` for development
+- `runtime-config.staging.js` for staging
+- `runtime-config.production.js` for production
 
-`src/api/fetchClient.js` wraps [`react-fetch-utils`](https://www.npmjs.com/package/react-fetch-utils) and is pre-configured with `baseUrl` and `timeoutMs` from `window.runConfig`. It also wires up a `getAuthToken` hook that reads from `localStorage` (replace with your preferred method of token storage):
+## API and fetch client
+
+The fetch client in `src/api/fetchClient.js` wraps `react-fetch-utils` and uses `baseUrl` and `timeoutMs` from `window.runConfig`. It also provides a `getAuthToken` hook that reads from `localStorage`. Replace this with your preferred token storage method.
 
 ```js
 // Customize token retrieval in src/api/fetchClient.js
 getAuthToken: async () => localStorage.getItem("authToken"),
 ```
 
-API functions return a `FetchResponseConfig` object:
+API functions return a `FetchResponseConfig` object with these properties:
 
 ```ts
 {
@@ -72,7 +83,7 @@ API functions return a `FetchResponseConfig` object:
 }
 ```
 
-## Adding a New Page
+## Add a page
 
 1. Create a component in `src/pages/`.
 2. Add a `<Route>` in `src/App.jsx`:
@@ -81,11 +92,11 @@ API functions return a `FetchResponseConfig` object:
 <Route path="/about" element={<AboutPage />} />
 ```
 
-## Adding a New Component
+## Add a component
 
 Follow the pattern in `src/components/Component/`:
 
-```
+```text
 MyFeature/
   MyFeature.jsx   # Component
   getMyData.js    # API call(s)

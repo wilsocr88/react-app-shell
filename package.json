@@ -1,8 +1,38 @@
 {
   "name": "react-app-shell",
   "description": "A starter React app shell built with Vite, React Router, and react-fetch-utils",
+  "keywords": [
+    "react",
+    "vite",
+    "react-router",
+    "starter",
+    "frontend"
+  ],
+  "author": "Craig Wilson <wilsocr88@gmail.com>",
+  "version": "1.0.0",
+  "license": "MIT",
   "private": true,
-  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wilsocr88/react-app-shell.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wilsocr88/react-app-shell/issues"
+  },
+  "homepage": "https://github.com/wilsocr88/react-app-shell#readme",
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "files": [
+    "dist",
+    "public",
+    "src",
+    "index.html",
+    "README.md",
+    "vite.config.js",
+    "eslint.config.js"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",

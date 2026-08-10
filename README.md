@@ -1,6 +1,6 @@
 # React app shell
 
-This project is a starter React app shell built with Vite, React Router, and react-fetch-utils. It provides a simple structure for building a frontend app with example routing, API fetching, and runtime configuration.
+A starter React app shell built with Vite, React Router, and react-fetch-utils. Use it as a foundation for frontend apps that need routing, API fetching, authentication guards, and runtime configuration.
 
 ## Get started
 
@@ -34,17 +34,38 @@ public/
   runtime-config.production.js   # Example production runtime config
 src/
   main.jsx                       # App entry point with BrowserRouter and StrictMode
-  App.jsx                        # Route definitions
+  App.jsx                        # Authentication guard and route definitions
   api/
-    fetchClient.js               # Configured fetch client with baseUrl and auth token handling
+    fetchClient.js               # Fetch client configured with baseUrl and auth token
   components/
     Component/
       Component.jsx              # Example component with data fetching
       getItems.js                # Example API call for /items
       index.js                   # Re-export
+    Loading/
+      Loading.js                 # Loading spinner shown during async operations
+      index.js                   # Re-export
   pages/
     Page.jsx                     # Example page
 ```
+
+## Authentication
+
+`App.jsx` includes a simulated authentication guard. On mount, it runs an async check, shows the `Loading` component while it's pending, then either renders the authenticated routes or redirects to `/login`.
+
+Replace the `setTimeout` stub in `App.jsx` with your real auth logic:
+
+```jsx
+useEffect(() => {
+    // Replace with your auth check (e.g., validate a token or call an API)
+    checkAuth().then((isAuthenticated) => {
+        setAuthenticated(isAuthenticated);
+        setLoading(false);
+    });
+}, []);
+```
+
+To add a login page, uncomment the `<Route path="/login" ...>` line and wire up your login component.
 
 ## Runtime configuration
 
@@ -65,7 +86,7 @@ The project includes three example environment files:
 
 ## API and fetch client
 
-The fetch client in `src/api/fetchClient.js` wraps `react-fetch-utils` and uses `baseUrl` and `timeoutMs` from `window.runConfig`. It also provides a `getAuthToken` hook that reads from `localStorage`. Replace this with your preferred token storage method.
+The fetch client in `src/api/fetchClient.js` wraps `react-fetch-utils` and reads `apiUrl` and `timeoutMs` from `window.runConfig`. It uses `getAuthToken` to attach a bearer token to each request—by default it reads from `localStorage`. Replace this with your preferred token storage.
 
 ```js
 // Customize token retrieval in src/api/fetchClient.js
@@ -86,7 +107,7 @@ API functions return a `FetchResponseConfig` object with these properties:
 ## Add a page
 
 1. Create a component in `src/pages/`.
-2. Add a `<Route>` in `src/App.jsx`:
+2. Add a `<Route>` inside the authenticated `<Routes>` block in `src/App.jsx`:
 
 ```jsx
 <Route path="/about" element={<AboutPage />} />
